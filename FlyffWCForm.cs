@@ -12,9 +12,7 @@ namespace FlyffUniverse_WebClient
     {
         private static FlyffWCForm _instance;
         public ChromiumWebBrowser chromeBrowser;
-        private Thread buffThread;
-        private System.Windows.Forms.Timer waitForGameExitTimer, autoHealTimer, autoFollowTimer;
-
+        private System.Windows.Forms.Timer waitForGameExitTimer;
         public FlyffWCForm()
         {
             if (_instance == null) { _instance = this; }
@@ -38,6 +36,7 @@ namespace FlyffUniverse_WebClient
             CefSettings settings = new CefSettings();
             Cef.EnableHighDPISupport();
             settings.CachePath = ArgumentManager.profilePath;
+            settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 /CefSharp Browser" + Cef.CefSharpVersion;
             Cef.Initialize(settings);
             chromeBrowser = new ChromiumWebBrowser("https://universe.flyff.com/play");
             this.Controls.Add(chromeBrowser);
@@ -83,6 +82,7 @@ namespace FlyffUniverse_WebClient
         {
             Cef.Shutdown();
         }
+
 
     }
 

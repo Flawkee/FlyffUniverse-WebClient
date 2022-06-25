@@ -42,13 +42,13 @@ namespace FlyffUniverse_WebClient
         private void ProfileArg(string arg)
         {
             string rg = @"/ProfileName=(.+)";
-            GroupCollection gc = regexCheck(arg, rg);
+            GroupCollection gc = RegexCheck.Test(arg, rg);
             if (gc != null) { profilePath = appData + @"\FlyffUniverse\" + gc[1].Value; profileCheck = true; }
         }
         private void ResolutionArg(string arg)
         {
             string rg = @"/Resolution=([0-9]{1,4})x([0-9]{1,4})";
-            GroupCollection gc = regexCheck(arg, rg);
+            GroupCollection gc = RegexCheck.Test(arg, rg);
             if (gc != null) {
                 int width, height;
                 Int32.TryParse(gc[1].Value, out width);
@@ -60,7 +60,7 @@ namespace FlyffUniverse_WebClient
         private void FullscreenArg(string arg)
         {
             string rg = @"(/Fullscreen)";
-            GroupCollection gc = regexCheck(arg, rg);
+            GroupCollection gc = RegexCheck.Test(arg, rg);
             if (gc != null)
             {
                 mainForm.WindowState = FormWindowState.Maximized; 
@@ -71,7 +71,7 @@ namespace FlyffUniverse_WebClient
         private void PixelLocationArg(string arg)
         {
             string rg = @"/PixelLocation=(.+)\,(.+)";
-            GroupCollection gc = regexCheck(arg, rg);
+            GroupCollection gc = RegexCheck.Test(arg, rg);
             if (gc != null)
             {
                 int x = 0, y = 0;
@@ -84,7 +84,7 @@ namespace FlyffUniverse_WebClient
         private void DisplaySelectionArg(string arg)
         {
             string rg = @"/DisplayID=([0-9])";
-            GroupCollection gc = regexCheck(arg, rg);
+            GroupCollection gc = RegexCheck.Test(arg, rg);
             if (gc != null)
             {
                 int id;
@@ -92,14 +92,6 @@ namespace FlyffUniverse_WebClient
                 if (Screen.AllScreens.Length >= id) { mainForm.Location = Screen.AllScreens[id - 1].WorkingArea.Location; }
                 disCheck = true;
             }
-        }
-
-        private GroupCollection regexCheck(string arg ,string rg)
-        {
-            Regex r = new Regex(rg, RegexOptions.IgnoreCase);
-            Match m = r.Match(arg);
-            if (m.Success) { return m.Groups; }
-            else { return null; }
         }
     }
 }

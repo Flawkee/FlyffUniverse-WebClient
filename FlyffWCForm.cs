@@ -5,6 +5,7 @@ using CefSharp;
 using CefSharp.WinForms;
 using System.Text.RegularExpressions;
 using System.Threading;
+using AutoUpdaterDotNET;
 
 namespace FlyffUniverse_WebClient
 {
@@ -17,6 +18,7 @@ namespace FlyffUniverse_WebClient
         {
             if (_instance == null) { _instance = this; }
             InitializeComponent();
+            CheckForUpdates();
             SetArguments();
         }
         public static FlyffWCForm Instance { get { return _instance; } }
@@ -82,7 +84,13 @@ namespace FlyffUniverse_WebClient
         {
             Cef.Shutdown();
         }
-
+        private void CheckForUpdates()
+        {
+            AutoUpdater.Synchronous = true;
+            AutoUpdater.Mandatory = true;
+            AutoUpdater.AppTitle = "Flyff Universe Web Client";
+            AutoUpdater.Start("https://raw.githubusercontent.com/Flawkee/FlyffUniverse-WebClient/main/version.xml");
+        }
 
     }
 
